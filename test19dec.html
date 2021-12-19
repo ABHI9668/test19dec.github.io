@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html >
+<head>
+   
+    <style>
+        #canvas{
+            margin-top: 5%;
+            margin-left: 30%;
+            border: 1px solid black;
+            display: block;
+           
+            background:grey;
+        }
+        h2{
+            margin-left:30%;
+            font-size: 30px;
+            font-weight: bolder;
+        }
+    </style>
+    <title>Test</title>
+</head>
+<body>
+    <h2>Click on the Canvas then move the ball with Arrow keys.</h2>
+    <canvas id="canvas" tabindex=0 width="640" height="480"></canvas>
+
+    <script >
+        const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+let x = 100;
+let y = 100;
+
+
+let LEFT, UP, RIGHT, DOWN;
+
+function drawBall(x, y, r){
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, 2*Math.PI);
+   
+    ctx.fillStyle = "black";
+    ctx.fill();
+    ctx.closePath();
+}
+
+
+canvas.addEventListener('keydown', function(e){
+    if(e.keyCode === 37){
+        LEFT = true;
+    }
+    if(e.keyCode === 38){
+        UP = true;
+    }
+    if(e.keyCode === 39){
+        RIGHT = true;
+    }
+    if(e.keyCode === 40){
+        DOWN = true;
+    }
+});
+
+
+canvas.addEventListener('keyup', function(e){
+    if(e.keyCode === 37){
+        LEFT = false;
+    }
+    if(e.keyCode === 38){
+        UP = false;
+    }
+    if(e.keyCode === 39){
+        RIGHT = false;
+    }
+    if(e.keyCode === 40){
+        DOWN = false;
+    }
+});
+
+
+function move(){
+    if(LEFT){
+        x--;
+    }
+    if(UP){
+        y--;
+    }
+    if(RIGHT){
+        x++;
+    }
+    if(DOWN){
+        y++;
+    }
+}
+
+
+function mainLoop() {
+    ctx.clearRect(0, 0, 640, 480);
+    move();
+    drawBall(x, y, 20);
+    requestAnimationFrame(mainLoop);
+}
+requestAnimationFrame(mainLoop);
+    </script>
+</body>
+</html>
